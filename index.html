@@ -1,125 +1,177 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abyssic</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="https://i.ibb.co/PvH3YtSG/abcicon.png" type="image/png">
-    <style>
-        * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        caret-color: transparent;
-        }
 
-        body {
-        font-family: Arial, sans-serif;
-        overflow: hidden;
-        height: 100vh;
-        background: #fff;
-        position: relative;
-        }
+    <head>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                caret-color: transparent;
+            }
 
-        .background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        object-fit: cover;
-        }
+            body {
+                font-family: Arial, sans-serif;
+                overflow: hidden;
+                height: 100vh;
+                background: #fff;
+                position: relative;
+            }
 
-        .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        text-align: center;
-        position: relative;
-        z-index: 1;
-        }
+            .background {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                object-fit: cover;
+            }
 
-        .title {
-        font-size: 48px;
-        color: #fff;
-        text-shadow: 0 0 15px #fff;
-        margin-top: 20px;
-        font-weight: bold;
-        }
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                text-align: center;
+                position: relative;
+                z-index: 1;
+            }
 
-        .social-icons {
-        display: flex;
-        justify-content: center;
-        gap: 25px;
-        margin-top: 20px;
-        }
+            .title {
+                font-size: 48px;
+                color: #fff;
+                text-shadow: 0 0 15px #fff;
+                margin-top: 20px;
+                font-weight: bold;
+            }
 
-        .social-icons a {
-        color: #fff;
-        font-size: 2rem;
-        transition: all 0.3s ease;
-        text-shadow: 0 0 10px #fff;
-        text-decoration: none;
-        }
+            .social-icons {
+                display: flex;
+                justify-content: center;
+                gap: 25px;
+                margin-top: 20px;
+            }
 
-        .social-icons a:hover {
-        transform: scale(1.2);
-        color: #fff;
-        }
+            .social-icons a {
+                color: #fff;
+                font-size: 2rem;
+                transition: all 0.3s ease;
+                text-shadow: 0 0 10px #fff;
+                text-decoration: none;
+            }
 
-        .logo {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background-image: url('https://i.ibb.co/MDV8phyV/worm.png');
-        background-size: cover;
-        background-position: center;
-        filter: drop-shadow(0 0 15px #fff);
-        transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
-        margin-bottom: 20px;
-        }
+            .social-icons a:hover {
+                transform: scale(1.2);
+                color: #fff;
+            }
 
-        .logo:hover {
-        transform: scale(1.2) rotate(360deg);
-        text-shadow: 0 0 25px fff;
-        }
+            .logo {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                background-image: url('https://i.ibb.co/MDV8phyV/worm.png');
+                background-size: cover;
+                background-position: center;
+                filter: drop-shadow(0 0 15px #fff);
+                transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
+                margin-bottom: 20px;
+            }
 
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+            .logo:hover {
+                transform: scale(1.2) rotate(360deg);
+                text-shadow: 0 0 25px fff;
+            }
 
-        .logo-text {
-            color: #fff;
-            font-size: 1.2rem;
-            margin-top: 10px;
-            text-shadow: 0 0 10px #fff;
-        }
-    </style>
-</head>
+            .logo-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .logo-text {
+                color: #fff;
+                font-size: 1.2rem;
+                margin-top: 10px;
+                text-shadow: 0 0 10px #fff;
+            }
+
+            #overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 2;
+                cursor: pointer;
+            }
+
+            #overlay-text {
+                color: #fff;
+                font-size: 2rem;
+                text-shadow: 0 0 10px #fff;
+            }
+
+            .page-content {
+                display: none;
+                /* Initially hidden */
+            }
+        </style>
+    </head>
+
 <body>
-    <audio autoplay loop>
+
+    <div id="overlay">
+        <span id="overlay-text">Click Here</span>
+    </div>
+
+    <audio id="myAudio" loop>
         <source src="https://audio.jukehost.co.uk/pQ6ymsThVNzBFxZy6vrG2yXLSGZza6e1.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
     <video class="background" autoplay muted loop>
-        <source src="https://media-hosting.imagekit.io//c89a47a278514bac/meekz%20edit.mp4?Expires=1834209249&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=wr9bnNWKgE1uKC9Xssc3VRk~j7rLaeb4GzqI4vCUBDacsyvExx0CpkEWW-WAE~7ve-tbUpUm8IbOVEWALky98jIyG1FYrFxf2Es2WOQw5IJi2750xe-Wa-8LBuOiVtCjN0dLuvRDemejunNHeOTkxq-hBZYy29t8GMzC48kw~E32kFZ3RR142l2XIcfm2gzJZZwmPw-ujiHZm71wYcfzUAG3sDICnB4aTJxFi8MQm9ApQbZzPRsB1tpwn7SlB-Nmi0mTc94Z7cIoMd84n4t12g~6Frr9Ax4u5yq7ZSYUemDYFMtgela568hi~iKQC8dJIHj5JuXwIaYCuLC7A4tYDw__" type="video/mp4">
+        <source
+            src="https://media-hosting.imagekit.io//c89a47a278514bac/meekz%20edit.mp4?Expires=1834209249&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=wr9bnNWKgE1uKC9Xssc3VRk~j7rLaeb4GzqI4vCUBDacsyvExx0CpkEWW-WAE~7ve-tbUpUm8IbOVEWALky98jIyG1FYrFxf2Es2WOQw5IJi2750xe-Wa-8LBuOiVtCjN0dLuvRDemejunNHeOTkxq-hBZYy29t8GMzC48kw~E32kFZ3RR142l2XIcfm2gzJZZwmPw-ujiHZm71wYcfzUAG3sDICnB4aTJxFi8MQm9ApQbZzPRsB1tpwn7SlB-Nmi0mTc94Z7cIoMd84n4t12g~6Frr9Ax4u5yq7ZSYUemDYFMtgela568hi~iKQC8dJIHj5JuXwIaYCuLC7A4tYDw__"
+            type="video/mp4">
         Your browser does not support the video tag.
     </video>
-    <div class="container">
-        <div class="logo-container"> <div class="logo"></div>
-        <div class="logo-text">Owasp is a electronic's engineer and web developer.</div> </div> <div class="title">Abyssic C4</div>
+    <div class="container page-content">
+        <div class="logo-container">
+            <div class="logo"></div>
+            <div class="logo-text">Owasp is a electronic's engineer and web developer.</div>
+        </div>
+        <div class="title">Abyssic C4</div>
         <div class="social-icons">
             <a href="https://discord.gg/w72reppeHJ" target="_blank"><i class="fab fa-github"></i></a>
             <a href="https://discord.gg/w72reppeHJ" target="_blank"><i class="fab fa-discord"></i></a>
         </div>
     </div>
 
+    <script>
+        const overlay = document.getElementById('overlay');
+        const audio = document.getElementById('myAudio');
+        const pageContent = document.querySelector('.page-content');
+
+        overlay.addEventListener('click', () => {
+            overlay.style.display = 'none';
+            audio.play();
+            pageContent.style.display = 'flex';
+        });
+    </script>
+
 </body>
+
 </html>
