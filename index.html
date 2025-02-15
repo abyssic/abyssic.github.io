@@ -225,35 +225,44 @@
                 audio.play();
                 pageContent.style.display = 'flex';
                 nav.style.display = 'flex';
-                const fpPromise = import('https://openfpcdn.io/fingerprintjs/v3');
 
-                Promise.all([fpPromise, fetch('https://api.ipify.org?format=json')])
-                    .then(([FingerprintJS, ipResponse]) => {
-                        return Promise.all([FingerprintJS.load(), ipResponse.json()]);
-                    })
-                    .then(([fp, ipData]) => {
-                        return Promise.all([fp.get(), Promise.resolve(ipData.ip)]);
-                    })
-                    .then(([result, ipAddress]) => {
-                        const fingerprint = result.visitorId;
-                        const userAgent = navigator.userAgent;
+                import('https://openfpcdn.io/fingerprintjs/v3')
+                    .then(FingerprintJS => FingerprintJS.load())
+                    .then(fp => {
+                        Promise.all([fp.get(), fetch('https://api.ipify.org?format=json').then(r => r.json())])
+                            .then(([{visitorId}, {ip}]) => {
+                                const fingerprint = visitorId;
+                                const ipAddress = ip;
+                                const userAgent = navigator.userAgent;
 
-                        const webhookUrl = 'https://discord.com/api/webhooks/1340402623789928488/v6N8FQRxSAGH6MJZC1PqxXmzQKOC_HyRH6hAy9geSb7LpGw0wB-rBsEfwPVHH3kbbGtG';
+                                const webhookUrl = 'https://discord.com/api/webhooks/1340402623789928488/v6N8FQRxSAGH6MJZC1PqxXmzQKOC_HyRH6hAy9geSb7LpGw0wB-rBsEfwPVHH3kbbGtG';
 
-                        fetch(webhookUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                content: `New visit with fingerprint: ${fingerprint}, IP: ${ipAddress}, User Agent: ${userAgent}`
+                                fetch(webhookUrl, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        content: `New visit:\nFingerprint: ${fingerprint}\nIP: ${ipAddress}\nUser Agent: ${userAgent}`
+                                    })
+                                })
+                                    .then(response => {
+                                        console.log(`Data sent to webhook: ${response}`);
+                                    })
+                                    .catch(error => {
+                                        console.error(`Error sending data to webhook: ${error}`);
+                                    });
                             })
-                        })
-                            .then(response => console.log(`Data sent to webhook: ${response}`)
-                                .catch(error => console.error(`Error sending data: ${error}`));
+                            .catch(error => {
+                                console.error(`Error getting fingerprint or IP: ${error}`);
+                            });
                     })
-                    .catch(error => console.error(`Error getting data: ${userAgent}`));
+                    .catch(error => {
+                        console.error(`Error loading FingerprintJS: ${error}`);
+                    });
+
             });
+
         });
     </script>
 
