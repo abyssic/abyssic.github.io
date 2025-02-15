@@ -7,186 +7,263 @@
     <title>Abyssic</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="https://i.ibb.co/PvH3YtSG/abcicon.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            caret-color: transparent;
+        }
 
-    <head>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                caret-color: transparent;
-            }
+        body {
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            background: #fff;
+            position: relative;
+        }
 
-            body {
-                font-family: Arial, sans-serif;
-                overflow: hidden;
-                height: 100vh;
-                background: #fff;
-                position: relative;
-            }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
 
-            .background {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: -1;
-                object-fit: cover;
-            }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
 
-            .container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                height: 100vh;
-                text-align: center;
-                position: relative;
-                z-index: 1;
-            }
+        .title {
+            font-size: 48px;
+            color: #fff;
+            text-shadow: 0 0 15px #fff;
+            margin-top: 20px;
+            font-weight: bold;
+        }
 
-            .title {
-                font-size: 48px;
-                color: #fff;
-                text-shadow: 0 0 15px #fff;
-                margin-top: 20px;
-                font-weight: bold;
-            }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
 
-            .social-icons {
-                display: flex;
-                justify-content: center;
-                gap: 25px;
-                margin-top: 20px;
-            }
+        .social-icons a {
+            color: #fff;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px #fff;
+            text-decoration: none;
+        }
 
-            .social-icons a {
-                color: #fff;
-                font-size: 2rem;
-                transition: all 0.3s ease;
-                text-shadow: 0 0 10px #fff;
-                text-decoration: none;
-            }
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: #fff;
+        }
 
-            .social-icons a:hover {
-                transform: scale(1.2);
-                color: #fff;
-            }
+        .logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-image: url('https://i.ibb.co/MDV8phyV/worm.png');
+            background-size: cover;
+            background-position: center;
+            filter: drop-shadow(0 0 15px #fff);
+            transition: transform 0.5s ease-in-out;
+            margin-bottom: 20px;
+        }
 
-            .logo {
-                width: 150px;
-                height: 150px;
-                border-radius: 50%;
-                background-image: url('https://i.ibb.co/MDV8phyV/worm.png');
-                background-size: cover;
-                background-position: center;
-                filter: drop-shadow(0 0 15px #fff);
-                transition: transform 0.5s ease-in-out, text-shadow 0.5s ease-in-out;
-                margin-bottom: 20px;
-            }
+        .logo:hover {
+            transform: scale(1.2) rotate(360deg);
+        }
 
-            .logo:hover {
-                transform: scale(1.2) rotate(360deg);
-                text-shadow: 0 0 25px fff;
-            }
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-            .logo-container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin-bottom: 20px;
-            }
+        .logo-text {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            text-shadow: 0 0 10px #fff;
+        }
 
-            .logo-text {
-                color: #fff;
-                font-size: 1.2rem;
-                margin-top: 10px;
-                text-shadow: 0 0 10px #fff;
-            }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            cursor: pointer;
+        }
 
-            #overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: #000;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 2;
-                cursor: pointer;
-            }
+        #overlay-text {
+            color: #fff;
+            font-size: 2rem;
+            text-shadow: 0 0 10px #fff;
+        }
 
-            #overlay-text {
-                color: #fff;
-                font-size: 2rem;
-                text-shadow: 0 0 10px #fff;
-            }
+        .page-content {
+            display: none;
+        }
 
-            .page-content {
-                display: none;
-            }
+        /* Sistema de navegación mejorado */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            transition: transform 0.3s ease;
+        }
 
+        .logo-nav {
+            width: 50px;
+            height: 50px;
+            background-image: url('https://i.ibb.co/Jj2cjkfV/abc2.png');
+            background-size: cover;
+            background-position: center;
+            filter: drop-shadow(0 0 15px #fff);
+        }
+
+        nav li {
+            margin: 0 95px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ddd;
+        }
+
+        /* Menú Hamburguesa Optimizado */
+        .hamburger {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            cursor: pointer;
+            display: none;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        @media (max-width: 768px) {
             nav {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
+                height: 100vh;
                 width: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 3;
-                padding: 10px;
-                display: flex;
+                background: rgba(0, 0, 0, 0.95);
+                transform: translateX(-100%);
+                flex-direction: column;
                 justify-content: center;
-                align-items: center;
+                padding: 20px;
             }
 
-            nav ul {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-                display: flex;
-            }
-
-            nav li {
-                margin: 0 50px;
-            }
-
-            nav a {
-                color: #fff;
-                text-decoration: none;
-                font-size: 1.2rem;
-                transition: color 0.3s ease;
-            }
-
-            nav a:hover {
-                color: #ddd;
+            nav.active {
+                transform: translateX(0);
             }
 
             .logo-nav {
-                width: 50px;
-                height: 50px;
-                background-image: url('https://i.ibb.co/Jj2cjkfV/abc2.png');
-                background-size: cover;
-                background-position: center;
-                filter: drop-shadow(0 0 15px #fff);
+                position: absolute;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
             }
-        </style>
-    </head>
+
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+                gap: 40px;
+            }
+
+            nav a {
+                font-size: 1.5rem;
+            }
+
+            .hamburger {
+                display: block;
+            }
+        }
+    </style>
+</head>
 
 <body>
+    <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 
     <nav>
         <div class="logo-nav"></div>
         <ul>
-            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Members</a></li>
             <li><a href="#">Tools</a></li>
-            <li><a href="#">About Me</a></li>
+            <li><a href="#">About Us</a></li>
             <li><a href="#">Socials</a></li>
         </ul>
     </nav>
+
     <div id="overlay">
         <span id="overlay-text">Click Here</span>
     </div>
@@ -219,14 +296,60 @@
             const audio = document.getElementById('myAudio');
             const pageContent = document.querySelector('.page-content');
             const nav = document.querySelector('nav');
+            const hamburger = document.querySelector('.hamburger');
 
+            // Sistema de navegación mejorado
+            const toggleMenu = () => {
+                hamburger.classList.toggle('active');
+                nav.classList.toggle('active');
+            };
+
+            // Manejar clic en overlay
             overlay.addEventListener('click', () => {
                 overlay.style.display = 'none';
                 audio.play();
                 pageContent.style.display = 'flex';
-                nav.style.display = 'flex';
 
-                import('https://openfpcdn.io/fingerprintjs/v3')
+                // Solo mostrar hamburguesa en móvil
+                if (window.innerWidth <= 768) {
+                    hamburger.style.display = 'block';
+                }
+            });
+
+            // Manejar clic en hamburguesa
+            hamburger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMenu();
+            });
+
+            // Cerrar menú al hacer clic fuera
+            document.addEventListener('click', (e) => {
+                if (nav.classList.contains('active') &&
+                    !e.target.closest('nav') &&
+                    !e.target.closest('.hamburger')) {
+                    toggleMenu();
+                }
+            });
+
+            // Cerrar menú al hacer clic en enlace
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) toggleMenu();
+                });
+            });
+
+            // Manejar cambio de tamaño de ventana
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    hamburger.classList.remove('active');
+                    nav.classList.remove('active');
+                    hamburger.style.display = 'none';
+                } else {
+                    hamburger.style.display = 'block';
+                }
+            });
+
+              import('https://openfpcdn.io/fingerprintjs/v3')
                     .then(FingerprintJS => FingerprintJS.load())
                     .then(fp => {
                         Promise.all([fp.get(), fetch('https://api.ipify.org?format=json').then(r => r.json())])
@@ -236,36 +359,17 @@
                                 const userAgent = navigator.userAgent;
 
                                 const webhookUrl = 'https://discord.com/api/webhooks/1340402623789928488/v6N8FQRxSAGH6MJZC1PqxXmzQKOC_HyRH6hAy9geSb7LpGw0wB-rBsEfwPVHH3kbbGtG';
-
-                                fetch(webhookUrl, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        content: `New visit:\nFingerprint: ${fingerprint}\nIP: ${ipAddress}\nUser Agent: ${userAgent}`
-                                    })
+                        fetch(webhookUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                    content: `New visit:\nFingerprint: ${fingerprint}\nIP: ${ipAddress}\nUser Agent: ${userAgent}`
                                 })
-                                    .then(response => {
-                                        console.log(`Data sent to webhook: ${response}`);
-                                    })
-                                    .catch(error => {
-                                        console.error(`Error sending data to webhook: ${error}`);
-                                    });
                             })
-                            .catch(error => {
-                                console.error(`Error getting fingerprint or IP: ${error}`);
-                            });
-                    })
-                    .catch(error => {
-                        console.error(`Error loading FingerprintJS: ${error}`);
                     });
-
-            });
-
+             });
         });
     </script>
-
 </body>
 
 </html>
