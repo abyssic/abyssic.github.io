@@ -127,13 +127,66 @@
 
             .page-content {
                 display: none;
-                /* Initially hidden */
+            }
+
+            nav {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 3;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+            }
+
+            nav li {
+                margin: 0 50px;
+            }
+
+            nav a {
+                color: #fff;
+                text-decoration: none;
+                font-size: 1.2rem;
+                transition: color 0.3s ease;
+            }
+
+            nav a:hover {
+                color: #ddd;
+            }
+
+            .logo-nav {
+                width: 50px;
+                height: 50px;
+                background-image: url('https://i.ibb.co/Jj2cjkfV/abc2.png');
+                background-size: cover;
+                background-position: center;
+                filter: drop-shadow(0 0 15px #fff);
             }
         </style>
     </head>
 
 <body>
 
+    <nav>
+        <div class="logo-nav"></div>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Tools</a></li>
+            <li><a href="#">About Me</a></li>
+            <li><a href="#">Socials</a></li>
+        </ul>
+    </nav>
     <div id="overlay">
         <span id="overlay-text">Click Here</span>
     </div>
@@ -161,14 +214,18 @@
     </div>
 
     <script>
-        const overlay = document.getElementById('overlay');
-        const audio = document.getElementById('myAudio');
-        const pageContent = document.querySelector('.page-content');
+        document.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('overlay');
+            const audio = document.getElementById('myAudio');
+            const pageContent = document.querySelector('.page-content');
+            const nav = document.querySelector('nav');
 
-        overlay.addEventListener('click', () => {
-            overlay.style.display = 'none';
-            audio.play();
-            pageContent.style.display = 'flex';
+            overlay.addEventListener('click', () => {
+                overlay.style.display = 'none';
+                audio.play();
+                pageContent.style.display = 'flex';
+                nav.style.display = 'flex';
+            });
         });
     </script>
 
