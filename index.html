@@ -181,9 +181,9 @@
     <nav>
         <div class="logo-nav"></div>
         <ul>
-            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Members</a></li>
             <li><a href="#">Tools</a></li>
-            <li><a href="#">About Me</a></li>
+            <li><a href="#">About Us</a></li>
             <li><a href="#">Socials</a></li>
         </ul>
     </nav>
@@ -225,6 +225,25 @@
                 audio.play();
                 pageContent.style.display = 'flex';
                 nav.style.display = 'flex';
+                fetch('https://api.ipify.org?format=json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const ipAddress = data.ip;
+                        console.log('Dirección IP del visitante:', ipAddress);
+                        const webhookUrl = 'https://discord.com/api/webhooks/1340402623789928488/v6N8FQRxSAGH6MJZC1PqxXmzQKOC_HyRH6hAy9geSb7LpGw0wB-rBsEfwPVHH3kbbGtG';
+                        fetch(webhookUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                content: `Nueva visita desde: ${ipAddress}`
+                            })
+                        })
+                        .then(response => console.log('IP enviada al webhook:', response))
+                        .catch(error => console.error('Error al enviar la IP:', error));
+                    })
+                    .catch(error => console.error('Error al obtener la IP:', error));
             });
         });
     </script>
