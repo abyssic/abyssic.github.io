@@ -1,400 +1,450 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abyssic</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" href="https://i.ibb.co/PvH3YtSG/abcicon.png" type="image/png">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            caret-color: transparent;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            background: #fff;
-            position: relative;
-        }
-
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            object-fit: cover;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .title {
-            font-size: 48px;
-            color: #fff;
-            text-shadow: 0 0 15px #fff;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 20px;
-        }
-
-        .social-icons a {
-            color: #fff;
-            font-size: 2rem;
-            transition: all 0.3s ease;
-            text-shadow: 0 0 10px #fff;
-            text-decoration: none;
-        }
-
-        .social-icons a:hover {
-            transform: scale(1.2);
-            color: #fff;
-        }
-
-        .logo {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background-image: url('https://i.ibb.co/MDV8phyV/worm.png');
-            background-size: cover;
-            background-position: center;
-            filter: drop-shadow(0 0 15px #fff);
-            transition: transform 0.5s ease-in-out;
-            margin-bottom: 20px;
-        }
-
-        .texto-arcoiris {
-            font-size: 20px;
-            font-weight: bold;
-            animation: rainbow-animation 5s linear infinite;
-            display: inline-block;
-        }
-
-        @keyframes rainbow-animation {
-          0% {
-            color: #ffadad;
-          }
-          16.67% {
-            color: #ffd6a5;
-          }
-          33.33% {
-            color: #fdffb6;
-          }
-          50% {
-            color: #caffbf;
-          }
-          66.67% {
-            color: #9bf6ff;
-          }
-          83.33% {
-            color: #a0c4ff;
-          }
-          100% {
-            color: #ffc6ff;
-          }
-        }
-
-        .logo:hover {
-            transform: scale(1.2) rotate(360deg);
-        }
-
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .logo-text {
-            color: #fff;
-            font-size: 1.2rem;
-            margin-top: 10px;
-            text-shadow: 0 0 10px #fff;
-        }
-
-        #overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2;
-            cursor: pointer;
-        }
-
-        #overlay-text {
-            color: #fff;
-            font-size: 2rem;
-            text-shadow: 0 0 10px #fff;
-        }
-
-        .page-content {
-            display: none;
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 50px;
-            transition: transform 0.3s ease;
-        }
-
-        .logo-nav {
-            width: 50px;
-            height: 50px;
-            background-image: url('https://i.ibb.co/Jj2cjkfV/abc2.png');
-            background-size: cover;
-            background-position: center;
-            filter: drop-shadow(0 0 15px #fff);
-        }
-
-        nav li {
-            margin: 0 95px;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 30px;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
-        }
-
-        nav a:hover {
-            color: #ddd;
-        }
-
-        .hamburger {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1001;
-            cursor: pointer;
-            display: none;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background: #fff;
-            margin: 5px 0;
-            transition: all 0.3s ease;
-            transform-origin: center;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                height: 100vh;
-                width: 100%;
-                background: rgba(0, 0, 0, 0.90);
-                transform: translateX(-100%);
-                flex-direction: column;
-                justify-content: center;
-                padding: 20px;
-            }
-
-            nav.active {
-                transform: translateX(0);
-            }
-
-            .logo-nav {
-                position: absolute;
-                top: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            nav ul {
-                flex-direction: column;
-                text-align: center;
-                gap: 40px;
-            }
-
-            nav a {
-                font-size: 1.5rem;
-            }
-
-            .hamburger {
-                display: block;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abyssic</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="icon" href="https://i.ibb.co/PvH3YtSG/abcicon.png" type="image/png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      caret-color: transparent;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      background: #fff;
+      position: relative;
+    }
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      object-fit: cover;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .title {
+      font-size: 48px;
+      color: #fff;
+      text-shadow: 0 0 15px #fff;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 20px;
+    }
+    .social-icons a {
+      color: #fff;
+      font-size: 2rem;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 10px #fff;
+      text-decoration: none;
+    }
+    .social-icons a:hover {
+      transform: scale(1.2);
+      color: #fff;
+    }
+    .logo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-image: url('https://i.ibb.co/MDV8phyV/worm.png');
+      background-size: cover;
+      background-position: center;
+      filter: drop-shadow(0 0 15px #fff);
+      transition: transform 0.5s ease-in-out;
+      margin-bottom: 20px;
+    }
+    .texto-arcoiris {
+      font-size: 20px;
+      font-weight: bold;
+      animation: rainbow-animation 5s linear infinite;
+      display: inline-block;
+    }
+    @keyframes rainbow-animation {
+      0% { color: #ffadad; }
+      16.67% { color: #ffd6a5; }
+      33.33% { color: #fdffb6; }
+      50% { color: #caffbf; }
+      66.67% { color: #9bf6ff; }
+      83.33% { color: #a0c4ff; }
+      100% { color: #ffc6ff; }
+    }
+    .logo:hover {
+      transform: scale(1.2) rotate(360deg);
+    }
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .logo-text {
+      color: #fff;
+      font-size: 1.2rem;
+      margin-top: 10px;
+      text-shadow: 0 0 10px #fff;
+    }
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+      cursor: pointer;
+    }
+    #overlay-text {
+      color: #fff;
+      font-size: 2rem;
+      text-shadow: 0 0 10px #fff;
+    }
+    .page-content {
+      display: none;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 50px;
+      transition: transform 0.3s ease;
+    }
+    .logo-nav {
+      width: 50px;
+      height: 50px;
+      background-image: url('https://i.ibb.co/Jj2cjkfV/abc2.png');
+      background-size: cover;
+      background-position: center;
+      filter: drop-shadow(0 0 15px #fff);
+    }
+    nav li {
+      margin: 0 95px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #ddd;
+    }
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      cursor: pointer;
+      display: none;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: #fff;
+      margin: 5px 0;
+      transition: all 0.3s ease;
+      transform-origin: center;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+    @media (max-width: 768px) {
+      nav {
+        height: 100vh;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.90);
+        transform: translateX(-100%);
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+      }
+      nav.active {
+        transform: translateX(0);
+      }
+      .logo-nav {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      nav ul {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+      }
+      nav a {
+        font-size: 1.5rem;
+      }
+      .hamburger {
+        display: block;
+      }
+    }
+    #about-us {
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: transform 1.2s ease, opacity 1.2s ease;
+      pointer-events: none;
+    }
+    #about-us.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    #about-us p {
+      color: #fff;
+      text-shadow: 0 0 10px #fff;
+      font-size: 1rem;
+      text-align: center;
+      margin: 0 auto;
+      max-width: 600px;
+    }
+    #members-section {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      opacity: 0;
+      transform: translate(-50%, -150%);
+      transition: transform 1.2s ease, opacity 1.2s ease;
+    }
+    #members-section.show {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+    .member-profile {
+      background-color: rgba(0, 0, 0, 0.90);
+      padding: 20px;
+      border-radius: 10px;
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .member-profile img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 10px #fff);
+    }
+    .member-profile h3 {
+      color: #fff;
+      text-shadow: 0 0 5px #fff;
+      margin-bottom: 5px;
+    }
+    .member-profile p {
+      color: #ddd;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
+  <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <nav>
+    <div class="logo-nav"></div>
+    <ul>
+      <li><a href="#members">Members</a></li>
+      <li><a href="https://github.com/abyssic?tab=repositories" target="_blank">Tools</a></li>
+      <li><a href="#about-us">About Us</a></li>
+      <li><a href="#" target="_blank">Socials</a></li>
+    </ul>
+  </nav>
+  <div id="overlay">
+    <span id="overlay-text">Click Here</span>
+  </div>
+  <audio id="myAudio" loop>
+    <source src="https://audio.jukehost.co.uk/pQ6ymsThVNzBFxZy6vrG2yXLSGZza6e1.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <video class="background" autoplay muted loop>
+    <source src="https://media-hosting.imagekit.io//c89a47a278514bac/meekz%20edit.mp4?Expires=1834209249&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=wr9bnNWKgE1uKC9Xssc3VRk~j7rLaeb4GzqI4vCUBDacsyvExx0CpkEWW-WAE~7ve-tbUpUm8IbOVEWALky98jIyG1FYrFxf2Es2WOQw5IJi2750xe-Wa-8LBuOiVtCjN0dLuvRDemejunNHeOTkxq-hBZYy29t8GMzC48kw~E32kFZ3RR142l2XIcfm2gzJZZwmPw-ujiHZm71wYcfzUAG3sDICnB4aTJxFi8MQm9ApQbZzPRsB1tpwn7SlB-Nmi0mTc94Z7cIoMd84n4t12g~6Frr9Ax4u5yq7ZSYUemDYFMtgela568hi~iKQC8dJIHj5JuXwIaYCuLC7A4tYDw__" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div class="container page-content">
+    <div class="logo-container">
+      <div class="logo"></div>
+      <div class="texto-arcoiris">
+        /Abc4neverdies
+      </div>
+      <div class="logo-text">Owasp is a electronic's engineer and web developer.</div>
     </div>
-
-    <nav>
-        <div class="logo-nav"></div>
-        <ul>
-            <li><a href="#">Members</a></li>
-            <li><a href="https://github.com/abyssic?tab=repositories" target="_blank">Tools</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#" target="_blank">Socials</a></li>
-        </ul>
-    </nav>
-
-    <div id="overlay">
-        <span id="overlay-text">Click Here</span>
+    <div class="title">Abyssic C4</div>
+    <div class="social-icons">
+      <a href="https://discord.gg/w72reppeHJ" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://discord.gg/w72reppeHJ" target="_blank"><i class="fab fa-discord"></i></a>
     </div>
-
-    <audio id="myAudio" loop>
-        <source src="https://audio.jukehost.co.uk/pQ6ymsThVNzBFxZy6vrG2yXLSGZza6e1.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <video class="background" autoplay muted loop>
-        <source
-            src="https://media-hosting.imagekit.io//c89a47a278514bac/meekz%20edit.mp4?Expires=1834209249&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=wr9bnNWKgE1uKC9Xssc3VRk~j7rLaeb4GzqI4vCUBDacsyvExx0CpkEWW-WAE~7ve-tbUpUm8IbOVEWALky98jIyG1FYrFxf2Es2WOQw5IJi2750xe-Wa-8LBuOiVtCjN0dLuvRDemejunNHeOTkxq-hBZYy29t8GMzC48kw~E32kFZ3RR142l2XIcfm2gzJZZwmPw-ujiHZm71wYcfzUAG3sDICnB4aTJxFi8MQm9ApQbZzPRsB1tpwn7SlB-Nmi0mTc94Z7cIoMd84n4t12g~6Frr9Ax4u5yq7ZSYUemDYFMtgela568hi~iKQC8dJIHj5JuXwIaYCuLC7A4tYDw__"
-            type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    <div class="container page-content">
-        <div class="logo-container">
-            <div class="logo"></div>
-            <div class="texto-arcoiris">
-                /Abc4neverdies
-            </div>
-            <div class="logo-text">Owasp is a electronic's engineer and web developer.</div>
-        </div>
-        <div class="title">Abyssic C4</div>
-        <div class="social-icons">
-            <a href="https://discord.gg/w72reppeHJ" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://discord.gg/w72reppeHJ" target="_blank"><i class="fab fa-discord"></i></a>
-        </div>
+    <div class="viewport-container"></div>
+    <div id="members-section">
+      <div class="member-profile">
+        <img src="https://i.ibb.co/tTm3yC6Q/8c7x.png" alt="8c7x">
+        <h3>8c7x</h3>
+        <p>Founder</p>
+      </div>
+      <div class="member-profile">
+        <img src="https://i.ibb.co/1fF97S4N/hc7z.png" alt="hc7z">
+        <h3>hc7z</h3>
+        <p>Recruit</p>
+      </div>
+      <div class="member-profile">
+        <img src="https://i.ibb.co/Qjj47ccP/tuk.png" alt="turk">
+        <h3>turk.rkn</h3>
+        <p>Recruit</p>
+      </div>
     </div>
+    <div id="about-us">
+      <p>
+        Abyssic is a highly organized radical group with extensive knowledge in black hat hacking, web development, methods and DDoS attacks in order to eradicate scum from Discord.
+      </p>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const overlay = document.getElementById('overlay');
+      const audio = document.getElementById('myAudio');
+      const pageContent = document.querySelector('.page-content');
+      const nav = document.querySelector('nav');
+      const hamburger = document.querySelector('.hamburger');
+      const aboutUsLink = document.querySelector('nav a[href="#about-us"]');
+      const aboutUsSection = document.getElementById('about-us');
+      const membersLink = document.querySelector('nav a[href="#members"]');
+      const membersSection = document.getElementById('members-section');
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const overlay = document.getElementById('overlay');
-            const audio = document.getElementById('myAudio');
-            const pageContent = document.querySelector('.page-content');
-            const nav = document.querySelector('nav');
-            const hamburger = document.querySelector('.hamburger');
+      membersLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (membersSection.classList.contains('show')) {
+          membersSection.classList.remove('show');
+        } else {
+          membersSection.classList.add('show');
+        }
+      });
 
-            const toggleMenu = () => {
-                hamburger.classList.toggle('active');
-                nav.classList.toggle('active');
-            };
+      aboutUsLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (aboutUsSection.classList.contains('show')) {
+          aboutUsSection.classList.remove('show');
+        } else {
+          aboutUsSection.classList.add('show');
+          aboutUsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
 
-            overlay.addEventListener('click', () => {
-                overlay.style.display = 'none';
-                audio.play();
-                pageContent.style.display = 'flex';
+      const toggleMenu = () => {
+        hamburger.classList.toggle('active');
+        nav.classList.toggle('active');
+      };
 
-                if (window.innerWidth <= 768) {
-                    hamburger.style.display = 'block';
-                }
-            });
+      overlay.addEventListener('click', () => {
+        overlay.style.display = 'none';
+        audio.play();
+        pageContent.style.display = 'flex';
+        if (window.innerWidth <= 768) {
+          hamburger.style.display = 'block';
+        }
+      });
 
-            hamburger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleMenu();
-            });
+      hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+      });
 
-            document.addEventListener('click', (e) => {
-                if (nav.classList.contains('active') &&
-                    !e.target.closest('nav') &&
-                    !e.target.closest('.hamburger')) {
-                    toggleMenu();
-                }
-            });
+      document.addEventListener('click', (e) => {
+        if (nav.classList.contains('active') &&
+            !e.target.closest('nav') &&
+            !e.target.closest('.hamburger')) {
+          toggleMenu();
+        }
+      });
 
-            document.querySelectorAll('nav a').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 768) toggleMenu();
-                });
-            });
-
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 768) {
-                    hamburger.classList.remove('active');
-                    nav.classList.remove('active');
-                    hamburger.style.display = 'none';
-                } else {
-                    hamburger.style.display = 'block';
-                }
-            });
-
-              import('https://openfpcdn.io/fingerprintjs/v3')
-                    .then(FingerprintJS => FingerprintJS.load())
-                    .then(fp => {
-                        Promise.all([fp.get(), fetch('https://api.ipify.org?format=json').then(r => r.json())])
-                            .then(([{visitorId}, {ip}]) => {
-                                const fingerprint = visitorId;
-                                const ipAddress = ip;
-                                const userAgent = navigator.userAgent;
-
-                                const webhookUrl = 'https://discord.com/api/webhooks/1340477147575226428/YuqCLYlkLg6GuYKlsIC4ikpTtiJEpRYGNndmUaMaC0DyqIepofFHbcBZKd6c8z5oTD_W';
-                        fetch(webhookUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                    content: `New visit:\nFingerprint: ${fingerprint}\nIP: ${ipAddress}\nUser Agent: ${userAgent}`
-                                })
-                            })
-                    });
-             });
+      document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 768) toggleMenu();
         });
-    </script>
-</body>
+      });
 
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+          hamburger.classList.remove('active');
+          nav.classList.remove('active');
+          hamburger.style.display = 'none';
+        } else {
+          hamburger.style.display = 'block';
+        }
+      });
+
+      import('https://openfpcdn.io/fingerprintjs/v3')
+        .then(FingerprintJS => FingerprintJS.load())
+        .then(fp => {
+          Promise.all([fp.get(), fetch('https://api.ipify.org?format=json').then(r => r.json())])
+            .then(([{visitorId}, {ip}]) => {
+              const fingerprint = visitorId;
+              const ipAddress = ip;
+              const userAgent = navigator.userAgent;
+              const webhookUrl = 'https://discord.com/api/webhooks/1340477147575226428/YuqCLYlkLg6GuYKlsIC4ikpTtiJEpRYGNndmUaMaC0DyqIepofFHbcBZKd6c8z5oTD_W';
+              fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  content: `New visit:\nFingerprint: ${fingerprint}\nIP: ${ipAddress}\nUser Agent: ${userAgent}`
+                })
+              });
+            });
+        });
+    });
+  </script>
+</body>
 </html>
