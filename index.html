@@ -84,6 +84,37 @@
             margin-bottom: 20px;
         }
 
+        .texto-arcoiris {
+            font-size: 20px;
+            font-weight: bold;
+            animation: rainbow-animation 5s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes rainbow-animation {
+          0% {
+            color: #ffadad;
+          }
+          16.67% {
+            color: #ffd6a5;
+          }
+          33.33% {
+            color: #fdffb6;
+          }
+          50% {
+            color: #caffbf;
+          }
+          66.67% {
+            color: #9bf6ff;
+          }
+          83.33% {
+            color: #a0c4ff;
+          }
+          100% {
+            color: #ffc6ff;
+          }
+        }
+
         .logo:hover {
             transform: scale(1.2) rotate(360deg);
         }
@@ -126,7 +157,6 @@
             display: none;
         }
 
-        /* Sistema de navegación mejorado */
         nav {
             position: fixed;
             top: 0;
@@ -173,7 +203,6 @@
             color: #ddd;
         }
 
-        /* Menú Hamburguesa Optimizado */
         .hamburger {
             position: fixed;
             top: 20px;
@@ -281,6 +310,9 @@
     <div class="container page-content">
         <div class="logo-container">
             <div class="logo"></div>
+            <div class="texto-arcoiris">
+                /Abc4neverdies
+            </div>
             <div class="logo-text">Owasp is a electronic's engineer and web developer.</div>
         </div>
         <div class="title">Abyssic C4</div>
