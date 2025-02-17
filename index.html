@@ -325,7 +325,7 @@
     </div>
     <div class="title">Abyssic C4</div>
     <div class="social-icons">
-      <a href="https://discord.gg/w72reppeHJ" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://github.com/abyssic" target="_blank"><i class="fab fa-github"></i></a>
       <a href="https://discord.gg/w72reppeHJ" target="_blank"><i class="fab fa-discord"></i></a>
     </div>
     <div class="viewport-container"></div>
@@ -364,24 +364,31 @@
       const membersLink = document.querySelector('nav a[href="#members"]');
       const membersSection = document.getElementById('members-section');
 
+      let activeSection = null;
+
       membersLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        if (membersSection.classList.contains('show')) {
-          membersSection.classList.remove('show');
-        } else {
-          membersSection.classList.add('show');
-        }
+          event.preventDefault();
+          toggleSection(membersSection);
       });
 
       aboutUsLink.addEventListener('click', (event) => {
-        event.preventDefault();
-        if (aboutUsSection.classList.contains('show')) {
-          aboutUsSection.classList.remove('show');
-        } else {
-          aboutUsSection.classList.add('show');
+          event.preventDefault();
+          toggleSection(aboutUsSection);
           aboutUsSection.scrollIntoView({ behavior: 'smooth' });
-        }
       });
+
+      function toggleSection(section) {
+          if (section === activeSection) {
+              section.classList.remove('show');
+              activeSection = null;
+          } else {
+              if (activeSection) {
+                  activeSection.classList.remove('show');
+              }
+              section.classList.add('show');
+              activeSection = section;
+          }
+      }
 
       const toggleMenu = () => {
         hamburger.classList.toggle('active');
