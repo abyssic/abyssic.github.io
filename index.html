@@ -1,462 +1,543 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Abyssic</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="icon" href="https://i.ibb.co/PvH3YtSG/abcicon.png" type="image/png">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      caret-color: transparent;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-      height: 100vh;
-      background: #fff;
-      position: relative;
-    }
-    .background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      object-fit: cover;
-    }
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-    .title {
-      font-size: 48px;
-      color: #fff;
-      text-shadow: 0 0 15px #fff;
-      margin-top: 20px;
-      font-weight: bold;
-    }
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      margin-top: 20px;
-    }
-    .social-icons a {
-      color: #fff;
-      font-size: 2rem;
-      transition: all 0.3s ease;
-      text-shadow: 0 0 10px #fff;
-      text-decoration: none;
-    }
-    .social-icons a:hover {
-      transform: scale(1.2);
-      color: #fff;
-    }
-    .logo {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      background-image: url('https://i.ibb.co/MDV8phyV/worm.png');
-      background-size: cover;
-      background-position: center;
-      filter: drop-shadow(0 0 15px #fff);
-      transition: transform 0.5s ease-in-out;
-      margin-bottom: 20px;
-    }
-    .texto-arcoiris {
-      font-size: 20px;
-      font-weight: bold;
-      animation: rainbow-animation 5s linear infinite;
-      display: inline-block;
-    }
-    @keyframes rainbow-animation {
-      0% { color: #ffadad; }
-      16.67% { color: #ffd6a5; }
-      33.33% { color: #fdffb6; }
-      50% { color: #caffbf; }
-      66.67% { color: #9bf6ff; }
-      83.33% { color: #a0c4ff; }
-      100% { color: #ffc6ff; }
-    }
-    .logo:hover {
-      transform: scale(1.2) rotate(360deg);
-    }
-    .logo-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .logo-text {
-      color: #fff;
-      font-size: 1.2rem;
-      margin-top: 10px;
-      text-shadow: 0 0 10px #fff;
-    }
-    #overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 2;
-      cursor: pointer;
-    }
-    #overlay-text {
-      color: #fff;
-      font-size: 2rem;
-      text-shadow: 0 0 10px #fff;
-    }
-    .page-content {
-      display: none;
-    }
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 50px;
-      transition: transform 0.3s ease;
-    }
-    .logo-nav {
-      width: 50px;
-      height: 50px;
-      background-image: url('https://i.ibb.co/Jj2cjkfV/abc2.png');
-      background-size: cover;
-      background-position: center;
-      filter: drop-shadow(0 0 15px #fff);
-    }
-    nav li {
-      margin: 0 95px;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 30px;
-      margin: 0;
-      padding: 0;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.1rem;
-      transition: color 0.3s ease;
-    }
-    nav a:hover {
-      color: #ddd;
-    }
-    .hamburger {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1001;
-      cursor: pointer;
-      display: none;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 10px;
-      border-radius: 5px;
-    }
-    .hamburger span {
-      display: block;
-      width: 25px;
-      height: 3px;
-      background: #fff;
-      margin: 5px 0;
-      transition: all 0.3s ease;
-      transform-origin: center;
-    }
-    .hamburger.active span:nth-child(1) {
-      transform: translateY(8px) rotate(45deg);
-    }
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-    .hamburger.active span:nth-child(3) {
-      transform: translateY(-8px) rotate(-45deg);
-    }
-    @media (max-width: 768px) {
-      nav {
-        height: 100vh;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.90);
-        transform: translateX(-100%);
-        flex-direction: column;
-        justify-content: center;
-        padding: 20px;
-      }
-      nav.active {
-        transform: translateX(0);
-      }
-      .logo-nav {
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      nav ul {
-        flex-direction: column;
-        text-align: center;
-        gap: 40px;
-      }
-      nav a {
-        font-size: 1.5rem;
-      }
-      .hamburger {
-        display: block;
-      }
-    }
-    #about-us {
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: transform 1.2s ease, opacity 1.2s ease;
-      pointer-events: none;
-    }
-    #about-us.show {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-    #about-us p {
-      color: #fff;
-      text-shadow: 0 0 10px #fff;
-      font-size: 1rem;
-      text-align: center;
-      margin: 0 auto;
-      max-width: 600px;
-    }
-    #members-section {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      opacity: 0;
-      transform: translate(-50%, -150%);
-      transition: transform 1.2s ease, opacity 1.2s ease;
-    }
-    #members-section.show {
-      opacity: 1;
-      transform: translate(-50%, -50%);
-    }
-    .member-profile {
-      background-color: rgba(0, 0, 0, 0.90);
-      padding: 20px;
-      border-radius: 10px;
-      width: 250px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .member-profile img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 10px;
-      filter: drop-shadow(0 0 10px #fff);
-    }
-    .member-profile h3 {
-      color: #fff;
-      text-shadow: 0 0 5px #fff;
-      margin-bottom: 5px;
-    }
-    .member-profile p {
-      color: #ddd;
-      font-size: 0.9rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abyssic</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="https://i.ibb.co/PvH3YtSG/abcicon.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            caret-color: transparent;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: #111;
+            color: #fff;
+            position: relative;
+        }
+
+        .background {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.8;
+            filter: blur(1px);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(2px);
+            z-index: 1000;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+        }
+
+        nav.hidden {
+            transform: translateY(-100%);
+        }
+
+        .logo-nav {
+            width: 60px;
+            height: 60px;
+            background: url('https://i.ibb.co/Jj2cjkfV/abc2.png') center/cover no-repeat;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+            transition: transform 0.5s ease;
+        }
+
+        .logo-nav:hover {
+            transform: rotate(360deg);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #fff;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px 60px;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .container.visible {
+            opacity: 1;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 180px;
+            height: 180px;
+            background: url('https://i.ibb.co/MDV8phyV/worm.png') center/cover no-repeat;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.9));
+            transition: all 0.6s ease;
+            animation: pulse 2s infinite ease-in-out;
+
+            display: block;
+            margin: 0 auto;
+        }
+
+        .logo:hover {
+            transform: scale(1.15) rotate(15deg);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .title {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #fff, #fff, #fff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 15px #fff;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .rainbow-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            animation: rainbow 4s linear infinite;
+            text-align: center;
+        }
+
+        @keyframes rainbow {
+            0% {
+                color: #ff6b6b;
+            }
+
+            20% {
+                color: #f7d794;
+            }
+
+            40% {
+                color: #95e1d3;
+            }
+
+            60% {
+                color: #a8dadc;
+            }
+
+            80% {
+                color: #e5989b;
+            }
+
+            100% {
+                color: #ff6b6b;
+            }
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+            justify-content: center;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
+            transition: all 0.4s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-5px) scale(1.1);
+            color: #ddd;
+        }
+
+        #overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 0.5s ease;
+        }
+
+        #overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #overlay-text {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 15px #fff;
+            animation: flicker 2s infinite alternate;
+        }
+
+        @keyframes flicker {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        #about-us,
+        #members-section {
+            width: 100%;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.60);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+            position: relative;
+        }
+
+        #about-us.show,
+        #members-section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #about-us {
+            text-align: center;
+        }
+
+        #about-us p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        #members-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            justify-items: center;
+            padding: 80px 40px;
+        }
+
+        .member-profile {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .member-profile:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .member-profile img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
+            margin-bottom: 15px;
+        }
+
+        .member-profile h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        .member-profile p {
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                height: 100vh;
+                justify-content: center;
+                transform: translateX(-100%);
+                padding: 20px;
+            }
+
+            nav.active {
+                transform: translateX(0);
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 40px;
+                text-align: center;
+            }
+
+            nav a {
+                font-size: 1.8rem;
+            }
+
+            .hamburger {
+                display: flex;
+                position: fixed;
+                top: 20px;
+                right: 20px;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .logo {
+                width: 140px;
+                height: 140px;
+            }
+
+            #members-section {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding-top: 80px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <div class="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-  <nav>
-    <div class="logo-nav"></div>
-    <ul>
-      <li><a href="#members">Members</a></li>
-      <li><a href="https://github.com/abyssic?tab=repositories" target="_blank">Tools</a></li>
-      <li><a href="#about-us">About Us</a></li>
-      <li><a href="#" target="_blank">Kyrie</a></li>
-    </ul>
-  </nav>
-  <div id="overlay">
-    <span id="overlay-text">Click Here</span>
-  </div>
-  <audio id="myAudio" loop>
-    <source src="https://audio.jukehost.co.uk/pQ6ymsThVNzBFxZy6vrG2yXLSGZza6e1.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-  <video class="background" autoplay muted loop>
-    <source src="https://media-hosting.imagekit.io//c89a47a278514bac/meekz%20edit.mp4?Expires=1834209249&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=wr9bnNWKgE1uKC9Xssc3VRk~j7rLaeb4GzqI4vCUBDacsyvExx0CpkEWW-WAE~7ve-tbUpUm8IbOVEWALky98jIyG1FYrFxf2Es2WOQw5IJi2750xe-Wa-8LBuOiVtCjN0dLuvRDemejunNHeOTkxq-hBZYy29t8GMzC48kw~E32kFZ3RR142l2XIcfm2gzJZZwmPw-ujiHZm71wYcfzUAG3sDICnB4aTJxFi8MQm9ApQbZzPRsB1tpwn7SlB-Nmi0mTc94Z7cIoMd84n4t12g~6Frr9Ax4u5yq7ZSYUemDYFMtgela568hi~iKQC8dJIHj5JuXwIaYCuLC7A4tYDw__" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-  <div class="container page-content">
-    <div class="logo-container">
-      <div class="logo"></div>
-      <div class="texto-arcoiris">
-        Thanks for!!
-      </div>
-      <div class="logo-text">Owasp is a electronic's engineer and web developer.</div>
+    <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
-    <div class="title">Abyssic C4</div>
-    <div class="social-icons">
-      <a href="https://github.com/abyssic" target="_blank"><i class="fab fa-github"></i></a>
-      <a href="https://discord.gg/3Ue4Swbuct" target="_blank"><i class="fab fa-discord"></i></a>
+    <nav>
+        <div class="logo-nav"></div>
+        <ul>
+            <li><a href="#members">Members</a></li>
+            <li><a href="https://github.com/abyssic?tab=repositories" target="_blank">Tools</a></li>
+            <li><a href="#about-us">About Us</a></li>
+            <li><a href="#" target="_blank">Kyrie</a></li>
+        </ul>
+    </nav>
+    <div id="overlay">
+        <span id="overlay-text">Enter Abyssic</span>
     </div>
-    <div class="viewport-container"></div>
-    <div id="members-section">
-      <div class="member-profile">
-        <img src="https://i.ibb.co/1YQBY8vX/8c7x.webp" alt="8c7x">
-        <h3>8c7x</h3>
-        <p>Founder</p>
-      </div>
-      <div class="member-profile">
-        <img src="https://i.ibb.co/XrG48vwX/xcallender-png.gif" alt="xcallender">
-        <h3>XCALLENDER</h3>
-        <p>Mod</p>
-      </div>
-      <div class="member-profile">
-        <img src="https://i.ibb.co/nqc2R2Cp/maw.png" alt="maw">
-        <h3>Maw</h3>
-        <p>Recruit</p>
-      </div>
-      <div class="member-profile">
-        <img src="https://i.ibb.co/Wpfg4jnZ/codenepe.png" alt="coderis">
-        <h3>coderis</h3>
-        <p>Recruit</p>
-      </div>
+    <audio id="myAudio" loop>
+        <source src="https://audio.jukehost.co.uk/pQ6ymsThVNzBFxZy6vrG2yXLSGZza6e1.mp3" type="audio/mpeg">
+    </audio>
+    <video class="background" autoplay muted loop>
+        <source
+            src="https://media-hosting.imagekit.io//c89a47a278514bac/meekz%20edit.mp4?Expires=1834209249&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=wr9bnNWKgE1uKC9Xssc3VRk~j7rLaeb4GzqI4vCUBDacsyvExx0CpkEWW-WAE~7ve-tbUpUm8IbOVEWALky98jIyG1FYrFxf2Es2WOQw5IJi2750xe-Wa-8LBuOiVtCjN0dLuvRDemejunNHeOTkxq-hBZYy29t8GMzC48kw~E32kFZ3RR142l2XIcfm2gzJZZwmPw-ujiHZm71wYcfzUAG3sDICnB4aTJxFi8MQm9ApQbZzPRsB1tpwn7SlB-Nmi0mTc94Z7cIoMd84n4t12g~6Frr9Ax4u5yq7ZSYUemDYFMtgela568hi~iKQC8dJIHj5JuXwIaYCuLC7A4tYDw__"
+            type="video/mp4">
+    </video>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo"></div>
+            <div class="rainbow-text">Thanks for joining us!</div>
+        </div>
+        <h1 class="title">Abyssic C4</h1>
+        <div class="social-icons">
+            <a href="https://github.com/abyssic" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://discord.gg/3Ue4Swbuct" target="_blank"><i class="fab fa-discord"></i></a>
+        </div>
+        <section id="members-section">
+            <div class="member-profile">
+                <img src="https://i.ibb.co/1YQBY8vX/8c7x.webp" alt="8c7x">
+                <h3>8c7x</h3>
+                <p>Founder</p>
+            </div>
+            <div class="member-profile">
+                <img src="https://i.ibb.co/XrG48vwX/xcallender-png.gif" alt="xcallender">
+                <h3>XCALLENDER</h3>
+                <p>Mod</p>
+            </div>
+            <div class="member-profile">
+                <img src="https://i.ibb.co/nqc2R2Cp/maw.png" alt="maw">
+                <h3>Maw</h3>
+                <p>Recruit</p>
+            </div>
+            <div class="member-profile">
+                <img src="https://i.ibb.co/Wpfg4jnZ/codenepe.png" alt="coderis">
+                <h3>coderis</h3>
+                <p>Recruit</p>
+            </div>
+        </section>
+        <section id="about-us">
+            <p>Abyssic is a highly skilled collective focused on advanced cybersecurity, web development, and innovative
+                solutions to combat digital threats.</p>
+        </section>
     </div>
-    <div id="about-us">
-      <p>
-        Abyssic is a highly organized radical group with extensive knowledge in black hat hacking, web development, methods and DDoS attacks in order to eradicate scum from Discord.
-      </p>
-    </div>
-  </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const overlay = document.getElementById('overlay');
-      const audio = document.getElementById('myAudio');
-      const pageContent = document.querySelector('.page-content');
-      const nav = document.querySelector('nav');
-      const hamburger = document.querySelector('.hamburger');
-      const aboutUsLink = document.querySelector('nav a[href="#about-us"]');
-      const aboutUsSection = document.getElementById('about-us');
-      const membersLink = document.querySelector('nav a[href="#members"]');
-      const membersSection = document.getElementById('members-section');
+    <script>
+        const overlay = document.getElementById('overlay');
+        const audio = document.getElementById('myAudio');
+        const container = document.querySelector('.container');
+        const nav = document.querySelector('nav');
+        const hamburger = document.querySelector('.hamburger');
+        const aboutUsLink = document.querySelector('nav a[href="#about-us"]');
+        const membersLink = document.querySelector('nav a[href="#members"]');
+        const aboutUsSection = document.getElementById('about-us');
+        const membersSection = document.getElementById('members-section');
+        let activeSection = null;
 
-      let activeSection = null;
-
-      membersLink.addEventListener('click', (event) => {
-          event.preventDefault();
-          toggleSection(membersSection);
-      });
-
-      aboutUsLink.addEventListener('click', (event) => {
-          event.preventDefault();
-          toggleSection(aboutUsSection);
-          aboutUsSection.scrollIntoView({ behavior: 'smooth' });
-      });
-
-      function toggleSection(section) {
-          if (section === activeSection) {
-              section.classList.remove('show');
-              activeSection = null;
-          } else {
-              if (activeSection) {
-                  activeSection.classList.remove('show');
-              }
-              section.classList.add('show');
-              activeSection = section;
-          }
-      }
-
-      const toggleMenu = () => {
-        hamburger.classList.toggle('active');
-        nav.classList.toggle('active');
-      };
-
-      overlay.addEventListener('click', () => {
-        overlay.style.display = 'none';
-        audio.play();
-        pageContent.style.display = 'flex';
-        if (window.innerWidth <= 768) {
-          hamburger.style.display = 'block';
-        }
-      });
-
-      hamburger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleMenu();
-      });
-
-      document.addEventListener('click', (e) => {
-        if (nav.classList.contains('active') &&
-            !e.target.closest('nav') &&
-            !e.target.closest('.hamburger')) {
-          toggleMenu();
-        }
-      });
-
-      document.querySelectorAll('nav a').forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth <= 768) toggleMenu();
+        overlay.addEventListener('click', () => {
+            overlay.classList.add('hidden');
+            audio.play();
+            container.classList.add('visible');
         });
-      });
 
-      window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-          hamburger.classList.remove('active');
-          nav.classList.remove('active');
-          hamburger.style.display = 'none';
-        } else {
-          hamburger.style.display = 'block';
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (nav.classList.contains('active') && !nav.contains(e.target) && !hamburger.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        function toggleSection(section) {
+            if (activeSection === section) {
+                section.classList.remove('show');
+                activeSection = null;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                if (activeSection) activeSection.classList.remove('show');
+                section.classList.add('show');
+                section.scrollIntoView({ behavior: 'smooth' });
+                activeSection = section;
+            }
         }
-      });
 
-      import('https://openfpcdn.io/fingerprintjs/v3')
-        .then(FingerprintJS => FingerprintJS.load())
-        .then(fp => {
-          Promise.all([fp.get(), fetch('https://api.ipify.org?format=json').then(r => r.json())])
-            .then(([{visitorId}, {ip}]) => {
-              const fingerprint = visitorId;
-              const ipAddress = ip;
-              const userAgent = navigator.userAgent;
-              const webhookUrl = 'https://discord.com/api/webhooks/1340477147575226428/YuqCLYlkLg6GuYKlsIC4ikpTtiJEpRYGNndmUaMaC0DyqIepofFHbcBZKd6c8z5oTD_W';
-              fetch(webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  content: `New visit:\nFingerprint: ${fingerprint}\nIP: ${ipAddress}\nUser Agent: ${userAgent}`
-                })
-              });
+        membersLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleSection(membersSection);
+        });
+
+        aboutUsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleSection(aboutUsSection);
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) nav.classList.add('hidden');
+            else nav.classList.remove('hidden');
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        import('https://openfpcdn.io/fingerprintjs/v3')
+            .then(FingerprintJS => FingerprintJS.load())
+            .then(fp => Promise.all([fp.get(), fetch('https://api.ipify.org?format=json').then(r => r.json())]))
+            .then(([{ visitorId }, { ip }]) => {
+                fetch('https://discord.com/api/webhooks/1343427162018943068/2Qxszd26D49-1pILvppgLHP0QjIndDJIRi2gZ4voI-dSX-o8ZWO-iXvjQXQYLV54jQ4d', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        content: `New visit:\nFingerprint: ${visitorId}\nIP: ${ip}\nUser Agent: ${navigator.userAgent}`
+                    })
+                });
             });
-        });
-    });
-  </script>
+    </script>
 </body>
+
 </html>
